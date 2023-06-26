@@ -10,7 +10,7 @@ export const modal = () => (
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <p>If you dont bla bla bla bla bla bla bla bla bla bla bla bla text goes here.</p>
+        <p>If you delete this thing the entire universe will go down!.</p>
       </div>
       <div class="modal-footer">
 	  	<button type="button" class="btn btn-primary">Oh no!</button>
