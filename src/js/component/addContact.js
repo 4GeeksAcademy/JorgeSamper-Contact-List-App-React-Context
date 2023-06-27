@@ -25,7 +25,7 @@ export const addContact = () => (
       </div>
       
       
-      <button type="submit" className="btn btn-primary w-100">Save</button>
+    <button type="submit" className="btn btn-primary w-100">Save</button>
 	  <a href="#" class="text-primary text-start">or get back to contacts.</a>
 
 	</form>
