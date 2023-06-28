@@ -8,7 +8,33 @@ import { Context } from "../store/appContext";
 export const Home = () => {
 	const { store } = useContext(Context);
 
-	console.log({ contacts: store.contacts});
+	const { contacts} = store;
+
+	console.log({ contacts });
+
+	return <div className="text-center mt-5">
+		{contacts.map((contact) => {
+		return (
+			<span>
+				<img
+				alt="img alt"
+				height="50px"
+				width="50px"
+				style={{ borderRadius: "50%"}} src="../../img/perfil.png"/>
+				<section>
+					<h5>{contact.full_name}</h5>
+					<p>{contact.address}</p>
+					<p>{contact.email}</p>
+				</section>
+				<section>
+					<i class="far fa-edit"></i>
+					<i class="fas fa-transh-alt"></i>
+				</section>
+			</span>
+		);
+	})}
+
+	</div>;
 };
 
 
