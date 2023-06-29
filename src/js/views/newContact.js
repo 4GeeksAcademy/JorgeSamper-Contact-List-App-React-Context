@@ -1,84 +1,83 @@
-import React from "react";
+import React, { useContext } from "react";
+import { Link } from "react-router-dom";
+
+import { Context } from "../store/appContext";
 
 export const NewContact = () => {
-    const inputFields = [
-        {
-            label: "Full name",
-            name: "full-name",
-            type: "text"
-        },
-        {
-            label: "Phone",
-            name: "phone",
-            type: "text",
-        },
-        {
-            label: "Email",
-            name: "email",
-            type: "email",
-        },
-        {
-            label: "Address",
-            name: "address",
-            type: "text",
-        },
-    ];
-    return (
-        <>
-        <h1>Add new contact</h1>
-        <form className="m-4">
-            {inputFields.map((inputOptions) => {
-            return (
-                <div key={inputOptions.name} className="mb-3 text-start fw-bold">
-                <label htmlfor={inputOptions.name} className="form-label" >{inputOptions.label}</label>
-                <input 
-                    type= {inputOptions.type}
-                    className="form-control" 
-                    id= {inputOptions.name}
-                    name= {inputOptions.name}
-                    placeholder= {inputOptions.label}
-                />
-                </div>
-            );
-            })}
+  const { store, actions } = useContext(Context);
 
-            {/* <h1 className="fw-bold">Add a new contact</h1>
-            
-            <div className="mb-3 text-start fw-bold">
-                <label htmlFor="exampleInputEmail1" className="form-label" >Email</label>
-                <input 
-                type="email" 
-                className="form-control" 
-                id="contactEmail" 
-                placeholder="Email" 
-                />
-            </div>
+  const { newContact } = store;
 
-            <div className="mb-3 text-start fw-bold">
-                <label htmlFor="exampleInputEmail1" className="form-label" >Phone</label>
-                <input 
-                type="email" 
-                className="form-control" 
-                id="contactPhone" 
-                placeholder="Phone" 
-                />
-            </div>
+  const handleChange = (e) => {
+    const key = e.target.name;
+    const value = e.target.value;
+    actions.handleNewContactChange(key, value);
+  };
 
-            <div className="mb-3 text-start fw-bold">
-                <label htmlFor="exampleInputEmail1" className="form-label" >Address</label>
-                <input 
-                type="email" 
-                className="form-control" 
-                id="exampleInputEmail1" 
-                aria-describedby="emailHelp" 
-                placeholder="Enter Address" 
-                />
-            </div> */}
-            
-            <button type="submit" className="btn btn-primary w-100">Save</button>
-            <a href="#" class="text-primary text-start">or get back to contacts.</a>
+  const onSubmit = (e) => {
+    e.preventDefault();
+    if (store.isNew) return actions.addNewContact();
+    actions.updateContact();
+  };
 
-        </form>
-        </>
-    );
+  return (
+    <div className="text-center mt-5">
+      <h1>Add new contact</h1>
+      <form onSubmit={onSubmit}>
+        {inputFields.map((inputOptions) => {
+          return (
+            <ContactItem
+              key={inputOptions.name}
+              value={newContact[inputOptions.name]}
+              handleChange={handleChange}
+              inputOptions={inputOptions}
+            />
+          );
+        })}
+        <button type="submit" className="btn btn-primary">
+          Submit
+        </button>
+      </form>
+      <Link to="/">Go back</Link>
+    </div>
+  );
 };
+
+const ContactItem = ({ value, inputOptions, handleChange }) => {
+  return (
+    <div className="form-group">
+      <label htmlFor={inputOptions.name}>{inputOptions.label}</label>
+      <input
+        type={inputOptions.type}
+        className="form-control"
+        onChange={handleChange}
+        value={value}
+        id={inputOptions.name}
+        name={inputOptions.name}
+        placeholder={inputOptions.label}
+      />
+    </div>
+  );
+};
+const inputFields = [
+  {
+    label: "Full name",
+    name: "full_name",
+    type: "text",
+  },
+  {
+    label: "Phone",
+    name: "phone",
+    type: "text",
+  },
+  {
+    label: "Email",
+    name: "email",
+    type: "email",
+  },
+  {
+    label: "Address",
+    name: "address",
+    type: "text",
+  },
+];
